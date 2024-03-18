@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dev.mvc.category.CategoryDAOInter"> <!-- SB가 자동으로 구현하여 연동하는 interface -->
+  <insert id="create" parameterType="dev.mvc.category.CategoryVO"> <!-- public int create(CateVO cateVO) {... -->
+  INSERT INTO category(categoryno, nation, genre, title, cnt, rdate, seqno, visible, people)
+  VALUES(CATEGORY_SEQ.nextval, #{nation}, #{genre}, #{title}, 0, sysdate, 1, 'Y', 0)
+  </insert> <!-- ...} -->
+  
+  <!-- SQL -> CateVO -> ArrayList<CategoryVO> return -->
+  <select id="list_all" resultType="dev.mvc.category.CategoryVO">
+    SELECT categoryno, nation, genre, title, cnt, rdate, seqno, visible, people
+    FROM category
+    ORDER BY categoryno ASC
+  </select>
+
+  <!-- SQL -> CategoryVO return -->
+  <select id="read" resultType="dev.mvc.category.CategoryVO" parameterType="int">
+    SELECT categoryno, nation, genre, title, cnt, rdate, seqno, visible, people
+    FROM category
+    WHERE categoryno=#{categoryno}
+  </select>
+  
+  <!-- 수정, return: 수정한 레코드 갯수, parameterType: 수정할 레코드 정보 -->
+  <update id="update" parameterType="dev.mvc.category.CategoryVO">
+    UPDATE category
+    SET nation=#{nation}, genre=#{genre}, title=#{title}, cnt=#{cnt}, rdate=sysdate, seqno=#{seqno}, visible=#{visible}, people=#{people}
+    WHERE categoryno=#{categoryno}
+  </update>
+  
+  <delete id="delete" parameterType="Integer">
+    DELETE FROM category WHERE categoryno=#{categoryno}
+  </delete>
+  
+</mapper>

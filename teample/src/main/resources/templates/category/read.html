@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html layout:decorate="~{layout}"> <!-- layout.html 상속-->
+<div layout:fragment="content">
+  <div class="title_line">카테고리 조회</div>
+
+  <div class="container mt-3">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">번호: <span th:text="${categoryVO.categoryno}"></span></li>
+      <li class="list-group-item">국가: <span th:text="${categoryVO.nation}"></span></li>
+      <li class="list-group-item">장르: <span th:text="${categoryVO.genre}"></span></li>
+      <li class="list-group-item">제목: <span th:text="${categoryVO.title}"></span></li>
+      <li class="list-group-item">관련 자료수: <span th:text="${categoryVO.cnt}"></span></li>
+      <li class="list-group-item">등록일: <span th:text="${categoryVO.rdate}"></span></li>
+      <li class="list-group-item">출력 순서: <span th:text="${categoryVO.seqno}"></span></li>
+      <li class="list-group-item">출력 모드: <span th:text="${categoryVO.visible}"></span></li>
+      <li class="list-group-item">조회수: <span th:text="${categoryVO.people}"></span></li>
+    </ul>  
+  </div>
+
+  <div class="content_body_bottom">
+    <button type="button" onclick="location.href='/category/list_all'" class="btn btn-secondary btn-sm">목록</button>
+    <button type="button" th:attr="onclick=|location.href='/category/update/${categoryVO.categoryno}'|" class="btn btn-secondary btn-sm">수정</button>
+    <button type="button" th:attr="onclick=|location.href='/category/delete/${categoryVO.categoryno}'|" class="btn btn-secondary btn-sm">삭제</button>
+    <button type="button" onclick="location.href='/category/create'" class="btn btn-secondary btn-sm">등록</button>
+  </div>
+  
+</div>
+</html>
+
+
+
