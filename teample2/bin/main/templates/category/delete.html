@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html layout:decorate="~{layout}"> <!-- layout.html 상속-->
+<div layout:fragment="content">
+  <div class='title_line'>
+    카테고리 > 
+    <span th:text="${categoryVO.nation}" class="title_line_text"></span >
+    
+    <span th:text="${categoryVO.genre}" class="title_line_text"></span >
+    
+    <span th:if="${categoryVO.title != '-'}" th:text="' > ' + ${categoryVO.title}" class="title_line_text"></span>
+    
+    삭제
+  </div>
+  
+  <aside class="aside_right">
+    <a href="/category/list_all">목록</a>
+    <span class="menu_devide">│</span>  <!-- 'ㅂ' + 한자키 동시에 누르면 특수문자 탭 열림. -->
+    <a th:href="@{|/category/update/${categoryVO.categoryno}|}">수정</a>
+    <span class="menu_devide">│</span>
+    <a href="/category/list_all">등록</a>
+    <span class="menu_devide">│</span>
+    <a href="javascript: location.reload();">새로 고침</a>
+  </aside>
+  <div class="menu_line"></div> <!-- 구분선 -->
+  
+  <div id='panel_delete' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center;'>
+
+    <form name="frm" th:object="${categoryVO}" method="post" action="/category/delete">
+      <input type="hidden" name="categoryno" th:value="${categoryVO.categoryno}">
+  
+      <div class="msg_warning">카테고리를 삭제하면 복구 할 수 없습니다.</div>
+      <label>삭제할 카테고리</label>: <span th:text="${categoryVO.nation}"></span>
+      
+       - <span th:text="${categoryVO.genre}"></span>
+       - <span th:text="${categoryVO.title}"></span>
+      
+      <div class="content_body_bottom">
+        <button type="submit" class="btn btn-secondary btn-sm">삭제</button>
+        <button type="button" onclick="location.href='/category/list_all'" class="btn btn-secondary btn-sm">취소</button>
+      </div>
+    </form>
+    
+  </div>
+  
+  <table class="table table-hover">
+    <colgroup>
+      <col style='width: 10%;'/>
+      <col style='width: 20%;'/>
+      <col style='width: 20%;'/>
+      <col style='width: 10%;'/>    
+      <col style='width: 20%;'/>
+      <col style='width: 20%;'/>
+    </colgroup>
+    <thead>
+      <tr>
+        <th class="th_bs">순서</th>
+        <th class="th_bs">국가</th>
+        <th class="th_bs">장르</th>
+        <th class="th_bs">제목</th>
+        <th class="th_bs">자료수</th>
+        <th class="th_bs">조회수</th>
+        <th class="th_bs">등록일</th>
+        <th class="th_bs">기타</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="categoryVO:${list}">
+        <td class="td_bs" th:text="${categoryVO.categoryno}"></td>
+        <td class="td_bs"><a th:href="@{|/category/read/${categoryVO.categoryno}|}" style="display: block;" th:text="${categoryVO.nation}"></a></td>
+        <td class="td_bs"><a th:href="@{|/category/read/${categoryVO.categoryno}|}" style="display: block;" th:text="${categoryVO.genre}"></a></td>
+        <td class="td_bs"><a th:href="@{|/category/read/${categoryVO.categoryno}|}" style="display: block;" th:text="${categoryVO.title}"></a></td>
+        <td class="td_bs" th:text="${categoryVO.cnt}"></td>
+        <td class="td_bs" th:text="${categoryVO.people}"></td>
+        <td class="td_bs" th:text="${categoryVO.rdate.substring(0, 10)}"></td>
+        <td class="td_bs">
+          <img src="/category/images/show.png" class="icon"> <!-- /static/cate/images/show.png -->
+          <img src="/category/images/decrease.png" class="icon">
+          <img src="/category/images/increase.png" class="icon">
+          <a th:href="@{|/category/update/${categoryVO.categoryno}|}"><img src="/category/images/update.png" class="icon"></a>
+          <a th:href="@{|/category/delete/${categoryVO.categoryno}|}"><img src="/category/images/delete.png" class="icon"></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+</div>
+</html>
+
